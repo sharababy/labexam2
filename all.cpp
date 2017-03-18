@@ -7,17 +7,22 @@
 using namespace std;
 
 
-#define SAMPLES 20     /* number of test samples */
-#define MAX_DENOM 10    /* max value of any denomination */
+#define SAMPLES 20      /* number of test samples */
+#define MAX_DENOM 6     /* max value of any denomination */
 #define MIN_DENOM 2     /* min value of any denomination */
 #define MAX_DENOM_NUM 4 /* max number of denominations */
 #define MIN_DENOM_NUM 2 /* min number of denominations */
-#define MAX_AMOUNT 50
+#define MAX_AMOUNT 50   /* max value of any sample */
 
 
 int findValue(int arr[],int n,int amount);
 
 void allDistinct(int arr[],int n,int maxDenom,int minDenom);
+
+int opt(int amount,int arr[], int n);
+
+int findMin(int arr[],int n);
+
 
 int main(int argc, char const *argv[])
 {
@@ -39,20 +44,45 @@ int main(int argc, char const *argv[])
 
 	quicksort(arr,0,n-1);   // sort the array of denominations
 
-	int amount;
+	int amount,g1result,dpresult;
 
 	int samples = SAMPLES;
+
+
+	cout<<"Denominations: ";
+	for (int i = 0; i < n; ++i)
+	{
+		cout<<arr[i]<<"\t";
+	}
+
+	cout<<endl<<endl;
+	cout<<"Amount\t"<<"Greedy 1\t"<<"Dynmc Prgming\t"<<"Optimal\t"<<endl;
 
 	for (int i = 0; i < samples; ++i)
 	{
 		amount = rand()%MAX_AMOUNT;
 
-		if(findValue(arr,n,amount)==1){
+		g1result = findValue(arr,n,amount);
+
+		dpresult = opt(amount,arr,n);
+
+		if (g1result == -1)
+		{
+			g1result = 0;
+		}
+		if (dpresult >= 2147483600 || dpresult<=0)
+		{
+			dpresult =0;
+		}
+
+		cout<<amount<<"\t"<<g1result<<"\t\t"<<dpresult<<"\t\t"<<dpresult<<endl;
+
+		if( g1result != 0){
 			success++;
 		}
 	}
 
-	cout<<"Success rate : "<<success<<"/"<<samples<<endl;
+	cout<<"Success rate of greedy1 : "<<success<<"/"<<samples<<endl;
 
 	return 0;
 }
@@ -62,7 +92,7 @@ int findValue(int arr[],int n,int amount)
 {
 
 
-	int remind[n+1],val[n+1],result=0;
+	int remind[n+1],val[n+1],result=-1;
 
 	remind[n] = amount;
 
@@ -79,28 +109,21 @@ int findValue(int arr[],int n,int amount)
 		}
 	}
 
-	int sum=0;
+	int sum=0,count=0;
 
 	for (int i = 0; i < n; ++i)
 	{
 		sum = sum + val[i]*arr[i];
+		count = count + val[i];
 	}
 
-	cout<<"\nAmount: "<<amount<<endl;
 
-	if (sum!=amount)
+
+	if (sum==amount)
 	{
-		cout<<"Not Solved !"<<endl;
-	}
-	else{
-		cout<<"Solved !"<<endl;
-		result=1;
+		result = count;
 	}
 	
-	for (int i = 0; i < n; ++i)
-	{
-		cout<<arr[i]<<":"<<val[i]<<" "<<endl;
-	}
 
 	return result;
 }
@@ -126,4 +149,49 @@ void allDistinct(int arr[],int n,int maxDenom,int minDenom){
 	}
 	
 
+}
+
+int opt(int amount,int arr[], int n){
+
+	int tempArray[n];
+
+	if (amount == 0 )
+	{
+		return 0;
+	}
+	else if (amount < arr[0])
+	{
+		// BIGGEST POSSIBLE VALUE 
+		// so that x is not selected
+
+		return 2147483647;
+	}
+	else{
+
+		for (int i = 0; i < n; ++i)
+		{
+			tempArray[i] = opt(amount-arr[i] , arr , n);
+
+		}
+
+		return (1 + findMin(tempArray,n) );
+	}
+
+	
+
+}
+
+int findMin(int arr[],int n){
+
+	int min=arr[0];
+
+	for (int i = 1; i < n; ++i)
+	{
+		if (min>arr[i])
+		{
+			min = arr[i];
+		}
+	}
+
+	return min;
 }

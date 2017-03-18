@@ -74,12 +74,14 @@ int main()
 {
 
  
- cin>>n;
+cin>>n;
 for(int i=0;i<n;++i)
 {
 
 cin>>deno[i];
 }
+
+sort
 
 int x;
 cin>>x;
