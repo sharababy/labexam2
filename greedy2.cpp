@@ -41,7 +41,7 @@ void findMin(int V, int denomination[], int size)
     {
         while (V >= denomination[i])
         {
-        	
+
          V -= denomination[i];
          count++;
          ans[k]=denomination[i];
@@ -81,6 +81,5 @@ int main()
 	int amount;
 	cin >> amount;
 	solve(amount,denomination,size);
-
 	return 0;
 }
