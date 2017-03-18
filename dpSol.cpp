@@ -15,9 +15,9 @@ int main(int argc, char const *argv[])
 {
 	int n=2;
 
-	int arr[] = {2,3};
+	int arr[] = {2,5,6};
 
-	int amount = 47;
+	int amount = 3;
 	
 	cout<<endl<<opt(amount,arr,n);
 
@@ -33,12 +33,12 @@ int opt(int amount,int arr[], int n){
 	{
 		return 0;
 	}
-	else if (amount < arr[0])
+	else if (amount < arr[0] || amount < 0 )
 	{
 		// BIGGEST POSSIBLE VALUE 
 		// so that x is not selected
 
-		return 2147483647;
+		return 2147483600;
 	}
 	else{
 
@@ -61,7 +61,7 @@ int findMin(int arr[],int n){
 
 	for (int i = 1; i < n; ++i)
 	{
-		if (min>arr[i])
+		if (min>=arr[i])
 		{
 			min = arr[i];
 		}

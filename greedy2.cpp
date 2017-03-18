@@ -1,24 +1,28 @@
-#include<iostream>
-#include<algorithm>
+#include <iostream>
+#include <algorithm>
 using namespace std;
 
 /* Note: V is the amount in findMin function */
+
 void findMin(int V, int denomination[], int size);
+void solve(int amount, int denomination[], int size);
+
+
 void solve(int amount, int denomination[], int size)
 {
 	int i;
-  if(amount==0)
+	if(amount==0)
  		return;
 
-for( i=size-1;i>=0;--i)
- {
-    if(amount%denomination[i]==0)
-   {
+	for( i=size-1;i>=0;--i)
+ 	{
+    	if(amount%denomination[i]==0)
+		{
 			cout << "Denominations are " << denomination[i] << ":" << (amount/denomination[i]) << endl;
-    	break;
+    		break;
+		}
 	}
-
-}
+	
 	if(i==0)
 		findMin(amount,denomination,size);
 }
@@ -27,23 +31,24 @@ void findMin(int V, int denomination[], int size)
 {
 
 	int ans[50];
- 	int l=0;
- 	int count=0;
-  int sum=0;
-  int v=V;
+	int l=0;
+	int count=0;
+	int sum=0;
+	int v=V;
 	int k;
 
     for (int i =size-1;i>=0 ; i--)
     {
         while (V >= denomination[i])
         {
-           V -= denomination[i];
-         	 count++;
-           ans[k]=denomination[i];
-           l++;
+        	
+         V -= denomination[i];
+         count++;
+         ans[k]=denomination[i];
+         l++;
     	 sum+=denomination[i];
- 	 }
-  }
+ 	 	}
+  	}
 
   if(v==sum)
 	{
