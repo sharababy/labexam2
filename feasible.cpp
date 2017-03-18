@@ -1,4 +1,4 @@
-#define MAX_POINT 2
+
 #define ARR_SIZE 100
 
 #include<time.h>
