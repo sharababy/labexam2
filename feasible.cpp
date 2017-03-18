@@ -1,33 +1,35 @@
 #define MAX_POINT 2
 #define ARR_SIZE 100
-
+ 
 #include<time.h>
 #include<stdlib.h>
- #include<iostream>
- using namespace std;
-
+#include<iostream>
+using namespace std;
+ 
+int solutions=0;
+ 
 void printArray(int arr[], int arr_size, int d[3]);
  
-
+ 
 void printCompositions(int n, int i, int d[3])
 {
  
  
   static int arr[ARR_SIZE];
- int c=0;
+ 
   if (n == 0)
   {
-  	c=c+1;
-  	cout <<"c is" << c <<endl;
     printArray(arr, i,d);
+    solutions=solutions+1;
+  	cout <<"c is" << solutions <<endl;
   }
   else if(n > 0)
   {
     int m,j; 
-  
+ 
     for (j = 0; j < 3; j++)
     {
-    
+ 
     	m=d[j];
       arr[i]= m;
       printCompositions(n-m, i+1,d);
@@ -35,7 +37,7 @@ void printCompositions(int n, int i, int d[3])
   }
 }
  
-
+ 
 void printArray(int arr[], int arr_size, int d[3])
 {
   int i,j;
@@ -44,9 +46,9 @@ void printArray(int arr[], int arr_size, int d[3])
   {
   	count[j]=0;
   }
-  
-  
-  
+ 
+ 
+ 
     for(j=0;j<3;j++)
     {
   	for(i=0;i<arr_size;i++)
@@ -57,23 +59,18 @@ void printArray(int arr[], int arr_size, int d[3])
 	}
     }
     }
-  
-
-    cout<<"coummmnt of coin is " << arr_size << endl;
-   for (i = 0; i < arr_size; i++)
-    {
-            cout << arr[i] << endl; 
-    }
-  
-  
+ 
+ 
+    cout<<"no of coin is " << arr_size << endl;
+ 
      for(j=0;j<3;j++)
      {
-     cout<<"count of d"<< j << "-->" <<  count[j] << endl;
+     cout<<"count of "<< " " << d[j] << "-->" <<  count[j] << endl;
      }
 }
-
-
-
+ 
+ 
+ 
 int main()
 {
   int n = 10,k=3;
@@ -86,4 +83,3 @@ d[2]=3;
   getchar();
   return 0;
 }
-
