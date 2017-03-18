@@ -1,35 +1,45 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+
+#include "quicksort.cpp" // reused code written by us in lab sessions
+
 using namespace std;
+
+
+#define SAMPLES 100		// number of test samples
+#define MAX_DENOM 10    // max value of any denomination
+#define MIN_DENOM 2     // min value of any denomination
+#define MAX_DENOM_NUM 4 // max number of denominations
+#define MIN_DENOM_NUM 2 // min number of denominations
 
 int findValue(int arr[],int n,int amount);
 
+void allDistinct(int arr[],int n,int maxDenom,int minDenom);
 
 int main(int argc, char const *argv[])
 {
-	int n,success=0;
-	
 	srand(time(NULL));
 
+	int n,
+		success=0,
+		maxDenom = MAX_DENOM,
+		minDenom = MIN_DENOM,
+		mindenomNum = MIN_DENOM_NUM,
+		maxdenomNum = MAX_DENOM_NUM;
+	
+
+	n = rand() % (maxdenomNum +1 -mindenomNum) + mindenomNum;
 
 	int arr[n];
 
-	cout<<"Enter all denominations:"<<endl;
-	for (int i = 0; i < n; ++i)
-	{
-		cout<<"D"<<i+1<<": ";
-		cin>>arr[i];
-	}
+	allDistinct(arr,n,maxDenom,minDenom); // check of randomly generated denominations are distinct
+
+	quicksort(arr,0,n-1);   // sort the array of denominations
 
 	int amount;
 
-
-	/*cout<<"Enter amount : ";
-	cin>>amount;
-*/
-
-	int samples = 100;
+	int samples = SAMPLES;
 
 	for (int i = 0; i < samples; ++i)
 	{
@@ -91,4 +101,27 @@ int findValue(int arr[],int n,int amount)
 	}
 
 	return result;
+}
+
+void allDistinct(int arr[],int n,int maxDenom,int minDenom){
+
+	
+
+	generate:for (int i = 0; i < n; ++i)
+	{
+		arr[i] = rand()%(maxDenom +1 -minDenom) + minDenom;		
+	}
+
+	for (int i = 0; i < n; ++i)
+	{
+		for (int j = i+1; j < n; ++j){
+			if (arr[i]==arr[j])
+			{
+
+				goto generate;
+			}	
+		}
+	}
+	
+
 }
